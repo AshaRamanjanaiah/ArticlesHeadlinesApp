@@ -47,6 +47,9 @@ class HeadlinesViewModel(
         _loadError.value = false
     }
 
+    /**
+     * Get list os news sources from shared preference
+     */
     fun getArticlesFromSources() {
         sourceList = SharedPreferenceHelper
             .getSharedPreferenceArrayList(getApplication())

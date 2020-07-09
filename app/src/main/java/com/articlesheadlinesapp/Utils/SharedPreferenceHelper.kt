@@ -7,6 +7,9 @@ import com.articlesheadlinesapp.model.NewsSources
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
+/**
+ * SharedPreferenceHelper provides methods to read and write data into Shared preference
+ */
 object SharedPreferenceHelper {
 
     private val NEWS_SOURCES = "sources_list"
@@ -45,7 +48,7 @@ object SharedPreferenceHelper {
         val json: String? = customPrefs(context).getString(SELECTED_LIST, "")
         val type = object : TypeToken<java.util.ArrayList<String?>?>() {}.getType()
 
-        val list = gson.fromJson(json, type)?: arrayList
+        val list = gson.fromJson(json, type) ?: arrayList
         return list
     }
 

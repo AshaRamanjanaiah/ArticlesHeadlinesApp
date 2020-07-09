@@ -50,14 +50,14 @@ class SavedArticleAdapter(private val savedArticlesList: ArrayList<Article>) :
         }
         holder.itemView.close_icon.visibility = View.VISIBLE
         holder.itemView.close_icon.setOnClickListener {
-            itemSelectedListener.onItemSelected(savedArticlesList.get(position).articleId)
+            itemSelectedListener.onItemSelected(savedArticlesList.get(position))
         }
     }
 
     class SavedArticleViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     interface ItemSelectedListener {
-        fun onItemSelected(item: Int)
+        fun onItemSelected(item: Article)
     }
 
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.articlesheadlinesapp.model.Article
 
 @Dao
@@ -28,5 +29,8 @@ interface AppDatabaseDao {
 
     @Query("SELECT * FROM articles_table WHERE isFavorite = 1")
     fun getSavedArticles(): LiveData<List<Article>>
+
+    @Update
+    fun update(article: Article)
 
 }

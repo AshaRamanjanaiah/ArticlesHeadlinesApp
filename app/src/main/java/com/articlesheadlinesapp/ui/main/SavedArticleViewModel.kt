@@ -3,6 +3,7 @@ package com.articlesheadlinesapp.ui.main
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.articlesheadlinesapp.database.AppDatabaseDao
+import com.articlesheadlinesapp.model.Article
 import kotlinx.coroutines.*
 
 class SavedArticleViewModel(val databaseDao: AppDatabaseDao,
@@ -15,15 +16,20 @@ class SavedArticleViewModel(val databaseDao: AppDatabaseDao,
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    fun UpdateArticleInDB(id: Int) {
+    /**
+     * Update the article field isFavorite = 0 in DB
+     * @param article that needs to be updated
+     */
+
+    fun UpdateArticleInDB(article: Article) {
         uiScope.launch {
-            updateArticle(id)
+            updateArticle(article)
         }
     }
 
-    private suspend fun updateArticle(articleId: Int) {
+    private suspend fun updateArticle(article: Article) {
         withContext(Dispatchers.IO) {
-            databaseDao.updateArticle(articleId, 0)
+            databaseDao.update(article)
         }
     }
 }

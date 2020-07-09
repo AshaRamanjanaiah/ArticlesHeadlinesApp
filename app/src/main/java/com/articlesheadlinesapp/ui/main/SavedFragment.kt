@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.articlesheadlinesapp.R
 import com.articlesheadlinesapp.database.AppDatabase
+import com.articlesheadlinesapp.model.Article
 import kotlinx.android.synthetic.main.fragment_main.*
 
 /**
@@ -57,8 +58,8 @@ class SavedFragment : Fragment(), SavedArticleAdapter.ItemSelectedListener {
             } else {
                 noResults.visibility = View.GONE
                 articlesList.visibility = View.VISIBLE
-                savedArticleAdapter.updateDetailsList(this, list)
             }
+            savedArticleAdapter.updateDetailsList(this, list)
         })
     }
 
@@ -72,7 +73,9 @@ class SavedFragment : Fragment(), SavedArticleAdapter.ItemSelectedListener {
         }
     }
 
-    override fun onItemSelected(item: Int) {
-        savedArticleViewModel.UpdateArticleInDB(id)
+    override fun onItemSelected(item: Article) {
+        var article = item
+        article.isFavorite = 0
+        savedArticleViewModel.UpdateArticleInDB(article)
     }
 }
