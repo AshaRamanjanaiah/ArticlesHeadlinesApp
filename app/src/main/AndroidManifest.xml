@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.main.ArticleDetailActivity"></activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.main.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

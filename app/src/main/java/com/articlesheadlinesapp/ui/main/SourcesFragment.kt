@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.articlesheadlinesapp.R
+import com.articlesheadlinesapp.viewmodel.SourcesViewModel
 import kotlinx.android.synthetic.main.fragment_sources.*
 
 /**

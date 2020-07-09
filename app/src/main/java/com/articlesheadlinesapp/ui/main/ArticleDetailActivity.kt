@@ -9,6 +9,8 @@ import com.articlesheadlinesapp.R
 import com.articlesheadlinesapp.Utils.GlobalConstants
 import com.articlesheadlinesapp.database.AppDatabase
 import com.articlesheadlinesapp.model.Article
+import com.articlesheadlinesapp.viewmodel.ArticleDetailViewModel
+import com.articlesheadlinesapp.viewmodel.ArticleDetailViewModelFactory
 import kotlinx.android.synthetic.main.activity_article_detail.*
 
 class ArticleDetailActivity : AppCompatActivity() {
@@ -25,7 +27,12 @@ class ArticleDetailActivity : AppCompatActivity() {
 
         val dataSource = AppDatabase.getInstance(application).appDatabaseDao
 
-        val viewModelFactory = ArticleDetailViewModelFactory(dataSource, article, application)
+        val viewModelFactory =
+            ArticleDetailViewModelFactory(
+                dataSource,
+                article,
+                application
+            )
 
         articleDetailViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(ArticleDetailViewModel::class.java)

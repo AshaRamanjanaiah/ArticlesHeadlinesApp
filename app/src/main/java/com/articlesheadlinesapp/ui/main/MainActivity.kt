@@ -1,11 +1,10 @@
-package com.articlesheadlinesapp
+package com.articlesheadlinesapp.ui.main
 
 import android.os.Bundle
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
-import com.articlesheadlinesapp.Utils.SharedPreferenceHelper
-import com.articlesheadlinesapp.ui.main.SectionsPagerAdapter
+import com.articlesheadlinesapp.R
 
 class MainActivity : AppCompatActivity() {
 

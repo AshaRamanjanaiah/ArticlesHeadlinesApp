@@ -1,4 +1,4 @@
-package com.articlesheadlinesapp.ui.main
+package com.articlesheadlinesapp.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
@@ -13,7 +13,11 @@ class ArticleDetailViewModelFactory(
     val application: Application ): ViewModelProvider.Factory{
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(ArticleDetailViewModel::class.java)) {
-            return ArticleDetailViewModel(database, article, application) as T
+            return ArticleDetailViewModel(
+                database,
+                article,
+                application
+            ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

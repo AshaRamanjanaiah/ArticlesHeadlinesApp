@@ -5,13 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.articlesheadlinesapp.R
 import com.articlesheadlinesapp.database.AppDatabase
 import com.articlesheadlinesapp.model.Article
+import com.articlesheadlinesapp.viewmodel.HeadlinesViewModelFactory
+import com.articlesheadlinesapp.viewmodel.SavedArticleViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
 
 /**
@@ -42,7 +43,11 @@ class SavedFragment : Fragment(), SavedArticleAdapter.ItemSelectedListener {
 
         val dataSource = AppDatabase.getInstance(application).appDatabaseDao
 
-        val viewModelFactory = HeadlinesViewModelFactory(dataSource, application)
+        val viewModelFactory =
+            HeadlinesViewModelFactory(
+                dataSource,
+                application
+            )
 
         articlesList.apply {
             adapter = savedArticleAdapter

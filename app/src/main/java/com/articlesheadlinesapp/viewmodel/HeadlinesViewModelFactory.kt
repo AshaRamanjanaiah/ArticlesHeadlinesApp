@@ -1,4 +1,4 @@
-package com.articlesheadlinesapp.ui.main
+package com.articlesheadlinesapp.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
@@ -12,9 +12,15 @@ class HeadlinesViewModelFactory(
 {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(HeadlinesViewModel::class.java)) {
-            return HeadlinesViewModel(appDatabaseDao, application) as T
+            return HeadlinesViewModel(
+                appDatabaseDao,
+                application
+            ) as T
         } else if(modelClass.isAssignableFrom(SavedArticleViewModel::class.java)) {
-            return SavedArticleViewModel(appDatabaseDao, application) as T
+            return SavedArticleViewModel(
+                appDatabaseDao,
+                application
+            ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

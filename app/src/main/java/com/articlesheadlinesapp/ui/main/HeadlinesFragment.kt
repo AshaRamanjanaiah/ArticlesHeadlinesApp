@@ -12,11 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.articlesheadlinesapp.R
 import com.articlesheadlinesapp.Utils.SharedPreferenceHelper
 import com.articlesheadlinesapp.database.AppDatabase
+import com.articlesheadlinesapp.viewmodel.HeadlinesViewModel
+import com.articlesheadlinesapp.viewmodel.HeadlinesViewModelFactory
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_main.loadError
-import kotlinx.android.synthetic.main.fragment_main.view.*
-import kotlinx.android.synthetic.main.fragment_main.view.articlesList
-import kotlinx.android.synthetic.main.fragment_sources.*
 
 /**
  * A Headlines fragment containing headlines of articles.
@@ -50,7 +49,11 @@ class HeadlinesFragment : Fragment(), SharedPreferences.OnSharedPreferenceChange
 
         val dataSource = AppDatabase.getInstance(application).appDatabaseDao
 
-        val viewModelFactory = HeadlinesViewModelFactory(dataSource, application)
+        val viewModelFactory =
+            HeadlinesViewModelFactory(
+                dataSource,
+                application
+            )
 
         articlesList.apply {
             adapter = headlinesAdapter
@@ -67,13 +70,19 @@ class HeadlinesFragment : Fragment(), SharedPreferences.OnSharedPreferenceChange
                 } else {
                     noResults.visibility = View.GONE
                     articlesList.visibility = View.VISIBLE
-                    headlinesAdapter.updateDetailsList(list)
                 }
+                headlinesAdapter.updateDetailsList(list)
             }
         })
 
         headlinesViewModel.loadError.observe(viewLifecycleOwner, Observer { isError ->
-            loadError.visibility = if (isError) View.VISIBLE else View.GONE
+            if (isError) {
+                noResults.visibility = View.GONE
+                loadError.visibility = View.VISIBLE
+            } else {
+                loadError.visibility = View.GONE
+            }
+
         })
 
         headlinesRefreshLayout.setOnRefreshListener {

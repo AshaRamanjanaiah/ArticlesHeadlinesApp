@@ -1,4 +1,4 @@
-package com.articlesheadlinesapp.ui.main
+package com.articlesheadlinesapp.viewmodel
 
 import android.app.Application
 import android.util.Log

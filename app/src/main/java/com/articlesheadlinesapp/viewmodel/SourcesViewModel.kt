@@ -1,15 +1,10 @@
-package com.articlesheadlinesapp.ui.main
+package com.articlesheadlinesapp.viewmodel
 
 import android.app.Application
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.articlesheadlinesapp.Utils.GlobalConstants
 import com.articlesheadlinesapp.Utils.SharedPreferenceHelper
 import com.articlesheadlinesapp.model.NewsSources
 import com.articlesheadlinesapp.model.Source
