@@ -2,7 +2,9 @@ package com.articlesheadlinesapp.viewmodel
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.articlesheadlinesapp.Utils.SharedPreferenceHelper
 import com.articlesheadlinesapp.database.AppDatabaseDao
 import com.articlesheadlinesapp.model.Article
@@ -51,14 +53,19 @@ class HeadlinesViewModel(
      * Get list os news sources from shared preference
      */
     fun getArticlesFromSources() {
-        sourceList = SharedPreferenceHelper
-            .getSharedPreferenceArrayList(getApplication())
-        if(!sourceList.isNullOrEmpty()) {
-            for(source in sourceList) {
-                getHeadlinesData(source)
-                Log.d("Source ", source)
+        try {
+            sourceList = SharedPreferenceHelper
+                .getSharedPreferenceArrayList(getApplication())
+            if(!sourceList.isNullOrEmpty()) {
+                for(source in sourceList) {
+                    getHeadlinesData(source)
+                    Log.d("Source ", source)
+                }
             }
+        } catch (e: Exception) {
+            Log.d("Test", "Crash")
         }
+
     }
 
     /**
@@ -75,8 +82,7 @@ class HeadlinesViewModel(
                         if(headlines.articles.isNullOrEmpty()) {
                             Log.d(TAG, "Articles are empty")
                         } else {
-                            tempArticleList.addAll(headlines.articles)
-                            _articlesList.value = tempArticleList
+                            _articlesList.value = headlines.articles
                             insertIntoDatabase()
                         }
                         _loadError.value = false

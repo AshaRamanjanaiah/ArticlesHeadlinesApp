@@ -60,6 +60,7 @@ class SavedFragment : Fragment(), SavedArticleAdapter.ItemSelectedListener {
         savedArticleViewModel.savedArticles.observe(viewLifecycleOwner, Observer { list ->
             if (list.isEmpty()) {
                 noResults.visibility = View.VISIBLE
+                articlesList.visibility = View.GONE
             } else {
                 noResults.visibility = View.GONE
                 articlesList.visibility = View.VISIBLE
