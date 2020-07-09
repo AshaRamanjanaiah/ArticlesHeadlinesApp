@@ -19,4 +19,14 @@ interface AppDatabaseDao {
 
     @Query("DELETE FROM articles_table")
     fun deleteArticles()
+
+    @Query("SELECT * FROM articles_table WHERE articleId=:id")
+    fun getArticle(id: Int): LiveData<Article>
+
+    @Query("UPDATE articles_table SET isFavorite=:flag WHERE articleId=:id")
+    fun updateArticle(id: Int, flag: Int)
+
+    @Query("SELECT * FROM articles_table WHERE isFavorite = 1")
+    fun getSavedArticles(): LiveData<List<Article>>
+
 }

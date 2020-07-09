@@ -22,9 +22,7 @@ class SourcesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sourcesViewModel = ViewModelProviders.of(this).get(SourcesViewModel::class.java).apply {
-            //setIndex(arguments?.getInt(ARG_SECTION_NUMBER) ?: 1)
-        }
+        sourcesViewModel = ViewModelProviders.of(this).get(SourcesViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -65,21 +63,11 @@ class SourcesFragment : Fragment() {
 
     companion object {
         /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private const val ARG_SECTION_NUMBER = "section_number"
-
-        /**
          * Returns a new instance of this fragment.
          */
         @JvmStatic
-        fun newInstance(sectionNumber: Int): SourcesFragment {
-            return SourcesFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_SECTION_NUMBER, sectionNumber)
-                }
-            }
+        fun newInstance(): SourcesFragment {
+            return SourcesFragment()
         }
     }
 }

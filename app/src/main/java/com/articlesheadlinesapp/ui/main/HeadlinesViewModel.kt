@@ -58,6 +58,10 @@ class HeadlinesViewModel(
         }
     }
 
+    /**
+     * Get articles from the selected sources over network
+     * @param source of the article
+     */
     private fun getHeadlinesData(source: String) {
         disposable.add(
             NewsApi.retrofitService.getheadlines(source)
@@ -96,11 +100,20 @@ class HeadlinesViewModel(
         }
     }
 
+    /**
+     * Insert list of articles in to DB
+     * @param articleList that needs to be saved in DB
+     */
+
     private suspend fun insertArticles(articleList: List<Article>?) {
         withContext(Dispatchers.IO) {
             database.saveArticles(articleList)
         }
     }
+
+    /**
+     * Clear database when data no longer required
+     */
 
     fun clearDatabase() {
         uiScope.launch {

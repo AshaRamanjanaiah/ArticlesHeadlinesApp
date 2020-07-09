@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -93,21 +92,11 @@ class HeadlinesFragment : Fragment(), SharedPreferences.OnSharedPreferenceChange
 
     companion object {
         /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private const val ARG_SECTION_NUMBER = "section_number"
-
-        /**
          * Returns a new instance of this fragment.
          */
         @JvmStatic
-        fun newInstance(sectionNumber: Int): HeadlinesFragment {
-            return HeadlinesFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_SECTION_NUMBER, sectionNumber)
-                }
-            }
+        fun newInstance(): HeadlinesFragment {
+            return HeadlinesFragment()
         }
     }
 

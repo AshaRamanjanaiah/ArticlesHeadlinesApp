@@ -13,6 +13,8 @@ class HeadlinesViewModelFactory(
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(HeadlinesViewModel::class.java)) {
             return HeadlinesViewModel(appDatabaseDao, application) as T
+        } else if(modelClass.isAssignableFrom(SavedArticleViewModel::class.java)) {
+            return SavedArticleViewModel(appDatabaseDao, application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
