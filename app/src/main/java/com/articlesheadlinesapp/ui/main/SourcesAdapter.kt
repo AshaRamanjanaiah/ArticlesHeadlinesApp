@@ -1,6 +1,5 @@
 package com.articlesheadlinesapp.ui.main
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,17 +45,13 @@ class SourcesAdapter(val sourcesList: ArrayList<Source>) :
             if (sourcesList.get(position).isSelected) {
                 holder.view.checkmark.setImageResource(android.R.drawable.checkbox_off_background)
                 sourcesList.get(position).isSelected = false
-                selectedSources.remove(sourcesList.get(position).name)
+                selectedSources.remove(sourcesList.get(position).id)
                 SharedPreferenceHelper.saveSharedPreferenceArrayList(holder.view.context, selectedSources)
             } else {
                 holder.view.checkmark.setImageResource(android.R.drawable.checkbox_on_background)
                 sourcesList.get(position).isSelected = true
-                selectedSources.add(sourcesList.get(position).name)
+                selectedSources.add(sourcesList.get(position).id)
                 SharedPreferenceHelper.saveSharedPreferenceArrayList(holder.view.context, selectedSources)
-            }
-
-            for(source in selectedSources) {
-                Log.d("test", source)
             }
         }
     }

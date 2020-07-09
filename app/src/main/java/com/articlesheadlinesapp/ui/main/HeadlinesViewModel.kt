@@ -31,12 +31,23 @@ class HeadlinesViewModel(
 
     var sourceList = arrayListOf<String>()
 
+    var tempArticleList = arrayListOf<Article>()
+
+    private val _loadError by lazy { MutableLiveData<Boolean>() }
+    val loadError: LiveData<Boolean> get() = _loadError
+
     init {
         refresh()
     }
 
     fun refresh() {
         clearDatabase()
+        tempArticleList.clear()
+        getArticlesFromSources()
+        _loadError.value = false
+    }
+
+    fun getArticlesFromSources() {
         sourceList = SharedPreferenceHelper
             .getSharedPreferenceArrayList(getApplication())
         if(!sourceList.isNullOrEmpty()) {
@@ -54,20 +65,25 @@ class HeadlinesViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<Headlines>() {
                     override fun onSuccess(headlines: Headlines) {
-                        _articlesList.value = headlines.articles
-                        insertIntoDatabase()
+                        if(headlines.articles.isNullOrEmpty()) {
+                            Log.d(TAG, "Articles are empty")
+                        } else {
+                            tempArticleList.addAll(headlines.articles)
+                            _articlesList.value = tempArticleList
+                            insertIntoDatabase()
+                        }
+                        _loadError.value = false
                     }
 
                     override fun onError(e: Throwable) {
-                        var kk = "tets"
-                        /*if (!articlesList.value.isNullOrEmpty()) {
+                        if (!_articlesList.value.isNullOrEmpty()) {
                             _loadError.value = false
                         } else {
-                            articlesList.value = listOf()
+                            _articlesList.value = listOf()
                             _loadError.value = true
                         }
-                        _loading.value = false
-                        Log.d(TAG, "Error loading data")*/
+
+                        Log.d(TAG, "Error loading data")
                     }
 
                 })

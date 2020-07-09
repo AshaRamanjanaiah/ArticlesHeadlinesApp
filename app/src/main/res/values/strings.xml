@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ArticlesHeadlinesApp</string>
+    <string name="app_name">Articles and Headlines</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="head_lines">HeadLines</string>
     <string name="sources">Sources</string>

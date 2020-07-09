@@ -9,9 +9,15 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.articlesheadlinesapp.R
 import com.articlesheadlinesapp.Utils.SharedPreferenceHelper
 import com.articlesheadlinesapp.database.AppDatabase
+import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_main.loadError
+import kotlinx.android.synthetic.main.fragment_main.view.*
+import kotlinx.android.synthetic.main.fragment_main.view.articlesList
+import kotlinx.android.synthetic.main.fragment_sources.*
 
 /**
  * A Headlines fragment containing headlines of articles.
@@ -19,7 +25,7 @@ import com.articlesheadlinesapp.database.AppDatabase
 class HeadlinesFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var headlinesViewModel: HeadlinesViewModel
-    private lateinit var mOnSharedPreferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener
+    private val headlinesAdapter = HeadlinesAdapter(arrayListOf())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +36,6 @@ class HeadlinesFragment : Fragment(), SharedPreferences.OnSharedPreferenceChange
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_main, container, false)
-        val textView: TextView = root.findViewById(R.id.section_label)
 
         context?.let {
             SharedPreferenceHelper.customPrefs(it).registerOnSharedPreferenceChangeListener(this)
@@ -48,12 +53,35 @@ class HeadlinesFragment : Fragment(), SharedPreferences.OnSharedPreferenceChange
 
         val viewModelFactory = HeadlinesViewModelFactory(dataSource, application)
 
+        articlesList.apply {
+            adapter = headlinesAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+
         headlinesViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(HeadlinesViewModel::class.java)
 
-        headlinesViewModel.articleList.observe(viewLifecycleOwner, Observer { it ->
-            var kk = it
+        headlinesViewModel.articleList.observe(viewLifecycleOwner, Observer { list ->
+            list?.let {
+                if (list.isEmpty()) {
+                   noResults.visibility = View.VISIBLE
+                } else {
+                    noResults.visibility = View.GONE
+                    articlesList.visibility = View.VISIBLE
+                    headlinesAdapter.updateDetailsList(list)
+                }
+            }
         })
+
+        headlinesViewModel.loadError.observe(viewLifecycleOwner, Observer { isError ->
+            loadError.visibility = if (isError) View.VISIBLE else View.GONE
+        })
+
+        headlinesRefreshLayout.setOnRefreshListener {
+            loadError.visibility = View.GONE
+            headlinesViewModel.refresh()
+            headlinesRefreshLayout.isRefreshing = false
+        }
     }
 
     override fun onDestroy() {
