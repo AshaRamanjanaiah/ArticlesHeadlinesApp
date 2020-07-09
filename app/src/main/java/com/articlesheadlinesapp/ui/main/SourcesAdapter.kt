@@ -1,15 +1,19 @@
 package com.articlesheadlinesapp.ui.main
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.articlesheadlinesapp.R
+import com.articlesheadlinesapp.Utils.SharedPreferenceHelper
 import com.articlesheadlinesapp.model.Source
 import kotlinx.android.synthetic.main.source_item_layout.view.*
 
 class SourcesAdapter(val sourcesList: ArrayList<Source>) :
     RecyclerView.Adapter<SourcesAdapter.SourcesViewModel>() {
+
+    var selectedSources = ArrayList<String?>()
 
     fun updateSourcesList(newSourcesList: List<Source>) {
         sourcesList.clear()
@@ -38,12 +42,21 @@ class SourcesAdapter(val sourcesList: ArrayList<Source>) :
             holder.view.checkmark.setImageResource(android.R.drawable.checkbox_off_background)
         }
         holder.view.source_layout.setOnClickListener {
+            var currentSource = sourcesList.get(position)
             if (sourcesList.get(position).isSelected) {
                 holder.view.checkmark.setImageResource(android.R.drawable.checkbox_off_background)
                 sourcesList.get(position).isSelected = false
+                selectedSources.remove(sourcesList.get(position).name)
+                SharedPreferenceHelper.saveSharedPreferenceArrayList(holder.view.context, selectedSources)
             } else {
                 holder.view.checkmark.setImageResource(android.R.drawable.checkbox_on_background)
                 sourcesList.get(position).isSelected = true
+                selectedSources.add(sourcesList.get(position).name)
+                SharedPreferenceHelper.saveSharedPreferenceArrayList(holder.view.context, selectedSources)
+            }
+
+            for(source in selectedSources) {
+                Log.d("test", source)
             }
         }
     }

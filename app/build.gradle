@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -25,6 +26,7 @@ android {
 
 def retrofitVersion = '2.3.0'
 def rxJavaVersion = '2.1.1'
+def roomVersion = "2.2.5"
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -42,6 +44,10 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:3.8.0"
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rxJavaVersion"
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
